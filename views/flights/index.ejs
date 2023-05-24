@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+
+<h2><%= title %></h2>
+
+    <% flights.forEach(function(flight) { %>
+        <div class="flight">
+            <h3><span>Flight: </span> <%= flight.airline + ' ' %><%= flight.flightNo %></h3>
+            <p><span>Departure airport: </span> <%= flight.airport %></p>
+            <p><span>Departure date & time: </span>
+                <% const today = new Date() %>
+                <span <% if (flight.departs < today) { %> class="expired" <% } %> >
+                    <%= flight.departs %>
+                </span>
+            </p>
+        </div>
+   <% }) %>
+
+<%- include('../partials/footer') %>

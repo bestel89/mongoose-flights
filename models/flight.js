@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const flights = require('../controllers/flights')
 //optional shortcut to the mongoose.Schema class - schema's always in caps
 const Schema = mongoose.Schema
 
@@ -22,11 +21,15 @@ const flightSchema = new Schema({
     departs: {
         type: Date,
         default: function() {
-            return new Date().getFullYear()+1
+            let depDate = new Date();
+            depDate.setFullYear(depDate.getFullYear() + 1);
+            console.log("The dep date really is " + depDate);
+            return depDate;
         }
     }
 }, {
-    timestamps: true,
+    timestamps: true
 })
+
 
 module.exports = mongoose.model('Flight', flightSchema)
