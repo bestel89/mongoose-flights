@@ -15,7 +15,6 @@ async function update(req, res, next) {
         const flight = await Flight.findById(id)
         flight.destinations.push(req.body)
         await flight.save()
-        console.log(flight)
     } catch (err) {
         console.log(err)
     }
@@ -26,8 +25,11 @@ async function show(req, res, next) {
     try {
       const id = req.params.id
       const flight = await Flight.findById(id)
+      let destinations = flight.destinations
+      destinations = destinations.sort(compareObjectsDests)
       res.render('flights/show', {
         flight,
+        destinations
       })
     } catch (err) {
       console.log('ERROR MESSAGE ->', err.message)
@@ -38,7 +40,7 @@ async function show(req, res, next) {
 async function index(req, res) {
     try {
         let flights = await Flight.find()
-        flights = flights.sort(compareObjects)
+        flights = flights.sort(compareObjectsDeparts)
         res.render('flights', {
             flights,
             title: 'Flights List',
@@ -48,8 +50,12 @@ async function index(req, res) {
     }
 }
 
-function compareObjects(a, b) {
+function compareObjectsDeparts(a, b) {
     return new Date(a.departs) - new Date(b.departs);
+}
+
+function compareObjectsDests(a, b) {
+    return new Date(a.arrival) - new Date(b.arrival);
 }
 
 function newFlight(req, res) {

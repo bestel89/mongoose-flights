@@ -29,6 +29,16 @@
                 </label><br>
                 <button id="showDetails" class="flexctr" type="submit">Add Details</button>
             </form>
+            
+            <% if (destinations.length > 0) { %>
+                <hr>
+                <h3>Destinations for this flight:</h3>
+              <% } else {} %>
+            <% destinations.forEach(function(destination) { %>
+                <p><span>Destination airport:</span> <%= destination.airport %></p>
+                <p><span>Arrival date & time:</span> <%= destination.arrival %></p>
+                <br>
+            <% }) %>
         </div>
 
 <%- include('../partials/footer') %>
