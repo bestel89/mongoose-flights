@@ -9,7 +9,6 @@ module.exports = {
 }
 
 async function update(req, res, next) {
-    // res.send('hit update route')
     const { id } = req.params
     try {
         const flight = await Flight.findById(id)
@@ -27,15 +26,31 @@ async function show(req, res, next) {
       const flight = await Flight.findById(id)
       let destinations = flight.destinations
       destinations = destinations.sort(compareObjectsDests)
+      let uniqueDestinations = getUniqueDests(destinations)
       res.render('flights/show', {
         flight,
-        destinations
+        destinations,
+        uniqueDestinations,
       })
     } catch (err) {
       console.log('ERROR MESSAGE ->', err.message)
       next() // 
     }
 }
+
+function getUniqueDests(arr) {
+    const allDests = ['AUS', 'DFW', 'DEN', 'LAX', 'SAN']
+    let selectArr = allDests
+    for (let i=0; i<arr.length; i++) {
+        if (selectArr.includes(arr[i].airport)) { 
+            let idxToRemove = selectArr.indexOf(arr[i].airport)
+            selectArr.splice(idxToRemove, 1)
+        }
+    }
+    return selectArr
+}
+
+
 
 async function index(req, res) {
     try {
@@ -68,7 +83,6 @@ async function create(req, res) {
     }
     try {
         await Flight.create(req.body)
-        // console.log(req.body)
         res.redirect('flights')
     } catch (error) {
         console.log(error)

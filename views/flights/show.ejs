@@ -17,11 +17,9 @@
             <form id="newFlightForm" action="/flights/<%= flight.id %>?_method=PUT" method="POST">
                 <label>Destination:
                     <select name="airport">
-                        <option value="AUS">AUS</option>
-                        <option value="DFW">DFW</option>
-                        <option value="DEN">DEN</option>
-                        <option value="LAX">LAX</option>
-                        <option value="SAN">SAN</option>
+                        <% uniqueDestinations.forEach(function(uniqueDest) { %>
+                            <option value="<%= uniqueDest %>"><%= uniqueDest %></option>
+                        <% }) %>
                       </select>
                   </label><br>
                 <label>Arrival time:
