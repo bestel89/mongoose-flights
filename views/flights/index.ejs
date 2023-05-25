@@ -12,6 +12,10 @@
                     <%= flight.departs %>
                 </span>
             </p>
+
+            <form action="/flights/<%= flight.id %>" method="GET">
+                <button id="showDetails" class="flexctr" type="submit">Show Details &#128747;</button>
+            </form>
         </div>
    <% }) %>
 

@@ -4,6 +4,35 @@ module.exports = {
     new: newFlight,
     create,
     index,
+    show,
+    update,
+}
+
+async function update(req, res, next) {
+    // res.send('hit update route')
+    const { id } = req.params
+    try {
+        const flight = await Flight.findById(id)
+        flight.destinations.push(req.body)
+        await flight.save()
+        console.log(flight)
+    } catch (err) {
+        console.log(err)
+    }
+    res.redirect(`/flights/${id}`)
+}
+
+async function show(req, res, next) {
+    try {
+      const id = req.params.id
+      const flight = await Flight.findById(id)
+      res.render('flights/show', {
+        flight,
+      })
+    } catch (err) {
+      console.log('ERROR MESSAGE ->', err.message)
+      next() // 
+    }
 }
 
 async function index(req, res) {

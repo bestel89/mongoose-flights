@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+
+<h2><%= flight.airline + ' ' %><%= flight.flightNo %></h2>
+
+        <div class="flight">
+            <h3><span>Flight: </span> <%= flight.airline + ' ' %><%= flight.flightNo %></h3>
+            <p><span>Departure airport: </span> <%= flight.airport %></p>
+            <p><span>Departure date & time: </span>
+                <% const today = new Date() %>
+                <span <% if (flight.departs < today) { %> class="expired" <% } %> >
+                    <%= flight.departs %>
+                </span>
+            </p>
+            <br>
+            <hr>
+            <h3>Add destination details: </h3>
+            <form id="newFlightForm" action="/flights/<%= flight.id %>?_method=PUT" method="POST">
+                <label>Destination:
+                    <select name="airport">
+                        <option value="AUS">AUS</option>
+                        <option value="DFW">DFW</option>
+                        <option value="DEN">DEN</option>
+                        <option value="LAX">LAX</option>
+                        <option value="SAN">SAN</option>
+                      </select>
+                  </label><br>
+                <label>Arrival time:
+                    <input type="datetime-local" name="arrival" >
+                </label><br>
+                <button id="showDetails" class="flexctr" type="submit">Add Details</button>
+            </form>
+        </div>
+
+<%- include('../partials/footer') %>
