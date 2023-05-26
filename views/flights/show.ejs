@@ -12,6 +12,10 @@
                 </span>
             </p>
             <br>
+            <form action="/flights/<%= flight.id %>/new" method="GET">
+                <button id="newTicket" class="flexctr" type="submit">Create ticket 	&#127915;</button>
+            </form>
+            <br>
             <hr>
             <h3>Add destination details: </h3>
             <form id="newFlightForm" action="/flights/<%= flight.id %>?_method=PUT" method="POST">
@@ -35,6 +39,17 @@
             <% destinations.forEach(function(destination) { %>
                 <p><span>Destination airport:</span> <%= destination.airport %></p>
                 <p><span>Arrival date & time:</span> <%= destination.arrival %></p>
+                <br>
+            <% }) %>
+
+            <% if (tickets.length > 0) { %>
+                <hr>
+                <h3>Tickets sold:</h3>
+              <% } else {} %>
+            <% tickets.forEach(function(ticket) { %>
+                <p><span>Seat:</span> <%= ticket.seat %></p>
+                <p><span>Price: </span>USD $ <%= ticket.price %></p>
+                <p><span>Unique ID:</span> <%= ticket._id %> </p>
                 <br>
             <% }) %>
         </div>

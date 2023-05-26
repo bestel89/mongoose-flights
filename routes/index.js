@@ -6,6 +6,4 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Welcome to Heathrow' });
 });
 
-// router.get('/')
-
 module.exports = router;

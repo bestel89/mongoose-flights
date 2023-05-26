@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+<br>
+
+<h2>Create New Ticket</h2>
+
+<div class="flight">
+    <h3><span>Flight: </span> <%= flight.airline + ' ' %><%= flight.flightNo %></h3>
+    <p><span>Departure airport: </span> <%= flight.airport %></p>
+    <p><span>Departure date & time: </span>
+        <% const today = new Date() %>
+        <span <% if (flight.departs < today) { %> class="expired" <% } %> >
+            <%= flight.departs %>
+        </span>
+    </p>
+    <br>
+    <hr>
+    <form id="newFlightForm" action="/tickets" method="POST">
+        <label>Seat:
+            <input type="text" name="seat" >
+        </label><br>
+        <label>Price ($ USD):
+            <input type="number" name="price" >
+        </label><br>
+        <input type="hidden" name="flight" value="<%= flight.id %>" />
+        <button id="newTicket" class="flexctr" type="submit">Create Ticket &#127915;</button>
+    </form>
+</div>
+
+<%- include('../partials/footer') %>

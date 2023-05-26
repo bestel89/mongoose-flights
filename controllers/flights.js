@@ -1,11 +1,31 @@
 const Flight = require('../models/flight')
+const Ticket = require('../models/ticket')
 
 module.exports = {
     new: newFlight,
+    newTicket: newTicket,
     create,
     index,
     show,
     update,
+    getUniqueDests,
+    compareObjectsDeparts,
+    compareObjectsDests,
+}
+
+async function newTicket(req, res) {
+    // console.log('hit new ticket route2')
+    // res.send('hit new ticket route2')
+    try {
+        const {id} = req.params
+        const flight = await Flight.findById(id)
+    res.render('flights/newTicket', {
+        flight,
+        errorMsg: '',
+    })
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 async function update(req, res, next) {
@@ -20,21 +40,22 @@ async function update(req, res, next) {
     res.redirect(`/flights/${id}`)
 }
 
-async function show(req, res, next) {
+async function show(req, res) {
     try {
       const id = req.params.id
       const flight = await Flight.findById(id)
       let destinations = flight.destinations
       destinations = destinations.sort(compareObjectsDests)
       let uniqueDestinations = getUniqueDests(destinations)
+      const tickets = await Ticket.find({flight: flight.id})
       res.render('flights/show', {
         flight,
+        tickets,
         destinations,
         uniqueDestinations,
       })
     } catch (err) {
       console.log('ERROR MESSAGE ->', err.message)
-      next() // 
     }
 }
 
