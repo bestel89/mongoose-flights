@@ -14,8 +14,6 @@ module.exports = {
 }
 
 async function newTicket(req, res) {
-    // console.log('hit new ticket route2')
-    // res.send('hit new ticket route2')
     try {
         const {id} = req.params
         const flight = await Flight.findById(id)
